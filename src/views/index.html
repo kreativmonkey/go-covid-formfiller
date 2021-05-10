@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ .Title }}</title>
+</head>
+<style>
+
+    form {
+        display: grid;
+        grid-row-gap: 1rem;
+        grid-column: 6;
+    }
+
+     /* Style inputs with type="text", select elements and textareas */
+    input[type=text], input[type=date], select, textarea {
+    width: 100%; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+    }
+
+    .half {
+        width: 40%;
+        grid-column: 2;
+    }
+
+    /* Style the submit button with a specific background color etc */
+    input[type=submit] {
+    background-color: #04AA6D;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    }
+
+    /* When moving the mouse over the submit button, add a darker green color */
+    input[type=submit]:hover {
+    background-color: #45a049;
+    }
+
+    /* Add a background color and some padding around the form */
+    .container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    max-width: 960px;
+    margin: 0 auto;
+    } 
+</style>
+
+<body>
+    <div class="container">
+        <h1>Corona Testcenter Ober-Olm</h1>
+
+        <form action="fillform" method="post">
+            <formset>
+                <label for="ldnr">Ldnr.:</label>
+                <input type="text" name="ldnr" id="ldnr" placeholder="Laufende Nummer" value="{{ .Ldnr  }}" required>
+            </formset>
+
+            <formset>
+                <label for="fname">Vorname(n):</label>
+                <input type="text" name="fname" id="firstname" autofocus="autofocus" tabindex="1" placeholder="Vorname(n)" required>
+            </formset>
+
+            <formset>
+                <label for="lname">Nachname:</label>
+                <input type="text" name="lname" id="lastname" tabindex="2" placeholder="Nachname" required>
+            </formset>
+
+            <formset>
+                <label for="bday">Geburtstag:</label>
+                <input type="date" name="bday" id="bday" tabindex="3" placeholder="Geburtstag" required>
+            </formset>
+
+            <formset>
+                <label for="street">Straße + Hausnummer:</label>
+                <input type="text" name="street" id="street" tabindex="4" placeholder="Straße und Hausnummer" required>
+            </formset>
+
+            <formset>
+                <label for="plz">Postleizahl:</label>
+                <input type="text" name="plz" id="plz" tabindex="5" placeholder="Postleizahl" required>
+            </formset>
+
+            <formset>
+                <label for="Stadt">Stadt:</label>
+                <input type="text" name="city" id="city" tabindex="6" placeholder="Stadt" required>
+            </formset>
+
+            <input type="submit" value="Erstellen">
+        </form>
+
+    </div>
+    
+</body>
+</html>

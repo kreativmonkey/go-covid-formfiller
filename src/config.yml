@@ -1,0 +1,19 @@
+server:
+  port: "8888"
+  host: localhost
+  save_path: /data/
+  timeout:
+    server: 30ns
+    write: 10ns
+    read: 15ns
+    idle: 5ns
+testcenter:
+  street: ""
+  plz: ""
+  city: ""
+  phone: ""
+  email: ""
+ldnr:
+  prefix: '#OO-'
+  counter: 54
+  numlength: 5
