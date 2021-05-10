@@ -14,6 +14,8 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/pkg/browser"
+
 	"github.com/desertbit/fillpdf"
 	"gopkg.in/yaml.v2"
 )
@@ -68,6 +70,10 @@ type Config struct {
 		Counter   int    `yaml:"counter"`
 		NumLength int    `yaml:"numlength"`
 	} `yaml:"ldnr"`
+	Test struct {
+		Hersteller string `yaml:"hersteller"`
+		Pzn        string `yaml:"pzn"`
+	} `yaml:"test"`
 }
 
 // NewConfig returns a new decoded Config struct
@@ -176,20 +182,22 @@ func fillForm(w http.ResponseWriter, r *http.Request) {
 	}
 
 	form := fillpdf.Form{
-		"name":           fmt.Sprintf("%s %s", r.FormValue("fname"), r.FormValue("lname")),
-		"signature":      fmt.Sprintf("%s %s", r.FormValue("fname"), r.FormValue("lname")),
-		"signature_text": signature_text,
-		"bday":           bday.Format("02.01.2006"),
-		"street_no":      r.FormValue("street"),
-		"plz_city":       fmt.Sprintf("%s %s", r.FormValue("plz"), r.FormValue("city")),
-		"date":           fmt.Sprintf("%s, %s", cfg.Testcenter.City, t.Add(time.Minute*time.Duration(2)).Format("02.01.2006")),
-		"datetime_start": t.Format("02.01.2006 15:04"),
-		"datetime_end":   fmt.Sprintf("%s, %s", cfg.Testcenter.City, t.Add(time.Minute*time.Duration(17)).Format("02.01.2006 15:04")),
-		"ldnr":           ldnr,
-		"tc_plz_city":    cfg.Testcenter.Plz + " " + cfg.Testcenter.City,
-		"tc_street_no":   cfg.Testcenter.Street,
-		"tc_phone":       cfg.Testcenter.Phone,
-		"tc_email":       cfg.Testcenter.Email,
+		"name":            fmt.Sprintf("%s %s", r.FormValue("fname"), r.FormValue("lname")),
+		"signature":       fmt.Sprintf("%s %s", r.FormValue("fname"), r.FormValue("lname")),
+		"signature_text":  signature_text,
+		"bday":            bday.Format("02.01.2006"),
+		"street_no":       r.FormValue("street"),
+		"plz_city":        fmt.Sprintf("%s %s", r.FormValue("zip"), r.FormValue("city")),
+		"date":            fmt.Sprintf("%s, %s", cfg.Testcenter.City, t.Add(time.Minute*time.Duration(2)).Format("02.01.2006")),
+		"datetime_start":  t.Format("02.01.2006 15:04"),
+		"datetime_end":    fmt.Sprintf("%s, %s", cfg.Testcenter.City, t.Add(time.Minute*time.Duration(17)).Format("02.01.2006 15:04")),
+		"ldnr":            ldnr,
+		"tc_plz_city":     cfg.Testcenter.Plz + " " + cfg.Testcenter.City,
+		"tc_street_no":    cfg.Testcenter.Street,
+		"tc_phone":        cfg.Testcenter.Phone,
+		"tc_email":        cfg.Testcenter.Email,
+		"test_hersteller": cfg.Test.Hersteller,
+		"test_pzn":        cfg.Test.Pzn,
 	}
 
 	fmt.Println("Fillpdf with ", form)
@@ -205,7 +213,7 @@ func fillForm(w http.ResponseWriter, r *http.Request) {
 	//w.Header().Set("Content-Disposition", "attachment; filename="+filepath)
 	//w.Header().Set("Content-Type", r.Header.Get("Content-Type"))
 	//http.ServeFile(w, r, filepath)
-
+	browser.OpenURL(filepath)
 	cfg.Ldnr.Counter += 1
 	updateConfig(*cfg)
 	http.Redirect(w, r, r.Header.Get("Referer"), 302)
@@ -276,6 +284,7 @@ func (config Config) Run() {
 		}
 	}()
 
+	browser.OpenURL("http://localhost:" + config.Server.Port)
 	// Block on this channel listeninf for those previously defined syscalls assign
 	// to variable so we can let the user know why the server is shutting down
 	interrupt := <-runChan

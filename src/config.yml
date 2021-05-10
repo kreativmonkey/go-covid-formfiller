@@ -1,19 +1,22 @@
 server:
   port: "8043"
-  host: 0.0.0.0
-  save_path: /data/
+  host: localhost
+  save_path: ./
   timeout:
     server: 30ns
     write: 10ns
     read: 15ns
     idle: 5ns
 testcenter:
-  street: ""
-  plz: ""
-  city: ""
+  street: Elsheimerstr. 17
+  plz: "55270"
+  city: Ober-Olm
   phone: ""
   email: ""
 ldnr:
   prefix: '#OO-'
-  counter: 54
+  counter: 55
   numlength: 5
+test:
+  hersteller: ""
+  pzn: ""
