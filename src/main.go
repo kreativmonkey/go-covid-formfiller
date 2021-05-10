@@ -196,7 +196,7 @@ func fillForm(w http.ResponseWriter, r *http.Request) {
 	// Filling form using pdftk
 	// save the file as ldnr.Tag + ldnr.StartCounter + pdf Example: OO-030.pdf
 	filepath := cfg.Server.SavePath + strings.Trim(ldnr, "#") + ".pdf"
-	err = fillpdf.Fill(form, "Bescheinigung_Ergebnis_und_Einverständnis_TuM_deutsch.pdf", filepath, fillpdf.Options{true, true})
+	err = fillpdf.Fill(form, "formular.pdf", filepath, fillpdf.Options{true, true})
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -8,14 +8,14 @@ LABEL description="This Docker is for creating Covid-Test PDF."
 ARG DEBIAN_FRONTEND=noninteractive
 ARG CONFIGFILE=config.yml
 
-ENV APP_HOME /go/src/covidformer
+ENV BUILD_HOME /app
 ENV APP_USER app
 
 RUN groupadd $APP_USER && useradd -m -g $APP_USER -l $APP_USER && \
-    mkdir -p $APP_HOME && chown -R $APP_USER:$APP_USER $APP_HOME
+    mkdir -p $BUILD_HOME && chown -R $APP_USER:$APP_USER $BUILD_HOME
 
 USER $APP_USER
-WORKDIR $APP_HOME
+WORKDIR $BUILD_HOME
 
 COPY src/ .
 
@@ -25,11 +25,12 @@ FROM debian:buster
 FROM golang:1.16.4-buster
 
 ENV APP_USER app
-ENV APP_HOME /go/src/covidformer
+ENV APP_HOME /app
 
 RUN groupadd $APP_USER && useradd -m -g $APP_USER -l $APP_USER
+RUN apt update && apt install -y pdftk
 RUN mkdir -p $APP_HOME && \
-    mkdir -p /data 
+    mkdir -p $APP_HOME/data 
 WORKDIR $APP_HOME
 COPY src/conf/ conf/
 COPY src/views/ views/

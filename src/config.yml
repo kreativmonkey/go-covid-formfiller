@@ -1,6 +1,6 @@
 server:
-  port: "8888"
-  host: localhost
+  port: "8043"
+  host: 0.0.0.0
   save_path: /data/
   timeout:
     server: 30ns
