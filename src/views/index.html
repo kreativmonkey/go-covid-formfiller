@@ -68,32 +68,32 @@
 
             <formset>
                 <label for="fname">Vorname(n):</label>
-                <input type="text" name="fname" id="firstname" autofocus="autofocus" tabindex="1" placeholder="Vorname(n)" required>
+                <input type="text" name="fname" id="firstname" autocomplete="given-name" autofocus="autofocus" tabindex="1" placeholder="Vorname(n)" required>
             </formset>
 
             <formset>
                 <label for="lname">Nachname:</label>
-                <input type="text" name="lname" id="lastname" tabindex="2" placeholder="Nachname" required>
+                <input type="text" name="lname" id="lastname" autocomplete="family-name" tabindex="2" placeholder="Nachname" required>
             </formset>
 
             <formset>
                 <label for="bday">Geburtstag:</label>
-                <input type="date" name="bday" id="bday" tabindex="3" placeholder="Geburtstag" required>
+                <input type="date" name="bday" id="bday" tabindex="3" autocomplete="bday" placeholder="Geburtstag" required>
             </formset>
 
             <formset>
                 <label for="street">Straße + Hausnummer:</label>
-                <input type="text" name="street" id="street" tabindex="4" placeholder="Straße und Hausnummer" required>
+                <input type="text" name="street" id="street" tabindex="4" autocomplete="street-address" placeholder="Straße und Hausnummer" required>
             </formset>
 
             <formset>
-                <label for="plz">Postleizahl:</label>
-                <input type="text" name="plz" id="plz" tabindex="5" placeholder="Postleizahl" required>
+                <label for="zip">Postleizahl:</label>
+                <input type="text" name="zip" id="zip" tabindex="5" autocomplete="postal-code" placeholder="Postleizahl" required>
             </formset>
 
             <formset>
                 <label for="Stadt">Stadt:</label>
-                <input type="text" name="city" id="city" tabindex="6" placeholder="Stadt" required>
+                <input type="text" name="city" id="city" tabindex="6" autocomplete="address-level2" placeholder="Stadt" required>
             </formset>
 
             <input type="submit" value="Erstellen">
