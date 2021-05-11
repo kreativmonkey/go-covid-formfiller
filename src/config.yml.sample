@@ -1,0 +1,40 @@
+# The commands will be deleted from the current tool!
+
+# Daten zum Testcenter
+testcenter:
+  street: ""
+  plz: ""
+  city: ""
+  phone: ""
+  email: ""
+
+# Laufende Nummer
+# prefix = fester Teil vor der Laufenden Nummer
+# counter = Start der laufenden Nummer (immer aktueller stand!)
+# Laufende Nummer: prefix + counter
+# numlength = Die Länge der laufenden Nummer
+# 
+# Beispiel: #OO-00055
+ldnr:
+  prefix: '#OO-'
+  counter: 55
+  numlength: 5
+
+# Daten des verwendeten Tests
+# Hersteller und PZN müssen auf dem Testdokument hinterlegt sein.
+test:
+  hersteller: ""
+  pzn: ""
+
+
+server:
+  port: "8043"
+  host: localhost
+  save_path: ./
+  timeout:
+    server: 30ns
+    write: 10ns
+    read: 15ns
+    idle: 5ns
+
+
