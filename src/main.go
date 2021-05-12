@@ -29,6 +29,8 @@ type Page struct {
 	Testcenter string
 }
 
+// region ------------------     <start of Config-Functions>     ------------------
+
 type Config struct {
 	Testcenter struct {
 		Street string `yaml:"street"`
@@ -111,27 +113,23 @@ func ValidateConfigPath(path string) error {
 	return nil
 }
 
-// ParseFlags will create and parse the CLI flags
-// and return the path to be used elsewhere
-func ParseFlags() (string, error) {
-	// String that contains the configured configuration path
-	var configPath string
-
-	// Set up a CLI flag called "-config" to allow users
-	// to supply the configuration file
-	flag.StringVar(&configPath, "config", "./config.yml", "path to config file")
-
-	// Actually parse the flags
-	flag.Parse()
-
-	// Validate the path first
-	if err := ValidateConfigPath(configPath); err != nil {
-		return "", err
+func updateConfig(config Config) {
+	log.Printf("Laufende Nummer erhöht zu: " + fmt.Sprintf("%x", config.Ldnr.Counter))
+	d, err := yaml.Marshal(&config)
+	if err != nil {
+		log.Fatalf("error: %v", err)
 	}
 
-	// Return the configuration path
-	return configPath, nil
+	err = ioutil.WriteFile("config.yml", d, 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 }
+
+// endregion ------------------     <end of Config-Functions>     ------------------
+
+// region ------------------     <start of Server-Functions>     ------------------
 
 // NewRouter generates the router used in the HTTP Server
 func NewRouter() *http.ServeMux {
@@ -219,6 +217,10 @@ func fillForm(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, r.Header.Get("Referer"), 302)
 }
 
+// endregion ------------------     <end of Server-Functions>     ------------------
+
+// region ------------------     <start of Helper-Functions>     ------------------
+
 // validate birthday
 func validateAge(birthdate time.Time, checkage int) bool {
 	today := time.Now()
@@ -241,6 +243,32 @@ func validateAge(birthdate time.Time, checkage int) bool {
 		return false
 	}
 	return true
+}
+
+// endregion ------------------     <end of Helper-Functions>     ------------------
+
+// region ------------------     <start of Application-Functions>     ------------------
+
+// ParseFlags will create and parse the CLI flags
+// and return the path to be used elsewhere
+func ParseFlags() (string, error) {
+	// String that contains the configured configuration path
+	var configPath string
+
+	// Set up a CLI flag called "-config" to allow users
+	// to supply the configuration file
+	flag.StringVar(&configPath, "config", "./config.yml", "path to config file")
+
+	// Actually parse the flags
+	flag.Parse()
+
+	// Validate the path first
+	if err := ValidateConfigPath(configPath); err != nil {
+		return "", err
+	}
+
+	// Return the configuration path
+	return configPath, nil
 }
 
 // Run will run the HTTP Server
@@ -315,19 +343,7 @@ func main() {
 	cfg.Run()
 }
 
-func updateConfig(config Config) {
-	log.Printf("Laufende Nummer erhöht zu: " + fmt.Sprintf("%x", config.Ldnr.Counter))
-	d, err := yaml.Marshal(&config)
-	if err != nil {
-		log.Fatalf("error: %v", err)
-	}
-
-	err = ioutil.WriteFile("config.yml", d, 0644)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-}
+// endregion ------------------     <end of Application-Functions>     ------------------
 
 /**
 * To Download files:
