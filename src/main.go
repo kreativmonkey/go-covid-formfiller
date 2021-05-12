@@ -174,9 +174,9 @@ func fillForm(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	signature_text := "Unterschrift der zu testenden Person"
+	signature_text := "Unterschrift der zu\n testenden Person"
 	if !validateAge(bday, 18) {
-		signature_text = "Unterschrift der Erziehungsberechtigten Person\n"
+		signature_text = "Unterschrift der\n Erziehungsberechtigten Person"
 	}
 
 	form := fillpdf.Form{
