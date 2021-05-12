@@ -146,8 +146,9 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Call Index")
 	ldnr := cfg.Ldnr.Prefix + fmt.Sprintf("%0*d", cfg.Ldnr.NumLength, cfg.Ldnr.Counter)
 	p := Page{
-		Title: "Datenerfassung - Coronatest",
-		Ldnr:  ldnr,
+		Title:      "Datenerfassung - Coronatest",
+		Ldnr:       ldnr,
+		Testcenter: cfg.Testcenter.City,
 	}
 	err := tpl.ExecuteTemplate(w, "index.html", p)
 	if err != nil {
@@ -174,7 +175,7 @@ func fillForm(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	signature_text := "Unterschrift der zu\n testenden Person"
+	signature_text := "Unterschrift der zu\n  testenden Person"
 	if !validateAge(bday, 18) {
 		signature_text = "Unterschrift der\n Erziehungsberechtigten Person"
 	}
