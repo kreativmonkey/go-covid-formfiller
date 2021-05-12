@@ -9,9 +9,7 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"os/signal"
 	"strings"
-	"syscall"
 	"time"
 
 	"github.com/pkg/browser"
@@ -190,7 +188,7 @@ func fillForm(w http.ResponseWriter, r *http.Request) {
 		"plz_city":        fmt.Sprintf("%s %s", r.FormValue("zip"), r.FormValue("city")),
 		"date":            fmt.Sprintf("%s, %s", cfg.Testcenter.City, t.Add(time.Minute*time.Duration(2)).Format("02.01.2006")),
 		"datetime_start":  t.Format("02.01.2006 15:04"),
-		"datetime_end":    fmt.Sprintf("%s, %s", cfg.Testcenter.City, t.Add(time.Minute*time.Duration(17)).Format("02.01.2006 15:04")),
+		"datetime_end":    fmt.Sprintf("%s, %s", cfg.Testcenter.City, t.Add(time.Minute*time.Duration(15)).Format("02.01.2006 15:04")),
 		"ldnr":            ldnr,
 		"tc_plz_city":     cfg.Testcenter.Plz + " " + cfg.Testcenter.City,
 		"tc_street_no":    cfg.Testcenter.Street,
@@ -267,7 +265,8 @@ func (config Config) Run() {
 	tpl = template.Must(template.ParseGlob("./views/*.html"))
 
 	// Handle ctrl+c/ctrl+x interrupt
-	signal.Notify(runChan, os.Interrupt, syscall.SIGTSTP)
+	// That is only for Linux Code!!
+	// signal.Notify(runChan, os.Interrupt, syscall.SIGTSTP)
 
 	// Alert the user that the server is starting
 	log.Printf("Server is starting on %s\n", server.Addr)
