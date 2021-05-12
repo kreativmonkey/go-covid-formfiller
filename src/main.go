@@ -30,6 +30,22 @@ type Page struct {
 }
 
 type Config struct {
+	Testcenter struct {
+		Street string `yaml:"street"`
+		Plz    string `yaml:"plz"`
+		City   string `yaml:"city"`
+		Phone  string `yaml:"phone"`
+		Email  string `yaml:"email"`
+	} `yaml:"testcenter"`
+	Ldnr struct {
+		Prefix    string `yaml:"prefix"`
+		Counter   int    `yaml:"counter"`
+		NumLength int    `yaml:"numlength"`
+	} `yaml:"ldnr"`
+	Test struct {
+		Hersteller string `yaml:"hersteller"`
+		Pzn        string `yaml:"pzn"`
+	} `yaml:"test"`
 	Server struct {
 		// Port is the local machine TCP Port to bind the HTTP Server to
 		Port string `yaml:"port"`
@@ -57,22 +73,6 @@ type Config struct {
 			Idle time.Duration `yaml:"idle"`
 		} `yaml:"timeout"`
 	} `yaml:"server"`
-	Testcenter struct {
-		Street string `yaml:"street"`
-		Plz    string `yaml:"plz"`
-		City   string `yaml:"city"`
-		Phone  string `yaml:"phone"`
-		Email  string `yaml:"email"`
-	} `yaml:"testcenter"`
-	Ldnr struct {
-		Prefix    string `yaml:"prefix"`
-		Counter   int    `yaml:"counter"`
-		NumLength int    `yaml:"numlength"`
-	} `yaml:"ldnr"`
-	Test struct {
-		Hersteller string `yaml:"hersteller"`
-		Pzn        string `yaml:"pzn"`
-	} `yaml:"test"`
 }
 
 // NewConfig returns a new decoded Config struct
