@@ -46,7 +46,7 @@ func ParseFlags() (string, error) {
 }
 
 // Run will run the HTTP Server
-func (config Config) Run() {
+func Run(config Config) {
 	// Set up a channel to listen to for interrupt signals
 	var runChan = make(chan os.Signal, 1)
 
@@ -114,7 +114,7 @@ func main() {
 	}
 
 	// Run the server
-	cfg.Run()
+	Run(cfg)
 }
 
 /**
