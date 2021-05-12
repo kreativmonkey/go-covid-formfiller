@@ -24,8 +24,9 @@ var (
 )
 
 type Page struct {
-	Title string
-	Ldnr  string
+	Title      string
+	Ldnr       string
+	Testcenter string
 }
 
 type Config struct {
@@ -177,7 +178,7 @@ func fillForm(w http.ResponseWriter, r *http.Request) {
 	}
 	signature_text := "Unterschrift der zu testenden Person"
 	if !validateAge(bday, 18) {
-		signature_text = "Unterschrift der\n Erziehungsberechtigten Person"
+		signature_text = "Unterschrift der\nErziehungsberechtigten Person"
 	}
 
 	form := fillpdf.Form{
@@ -187,9 +188,9 @@ func fillForm(w http.ResponseWriter, r *http.Request) {
 		"bday":              bday.Format("02.01.2006"),
 		"street_no":         r.FormValue("street"),
 		"plz_city":          fmt.Sprintf("%s %s", r.FormValue("zip"), r.FormValue("city")),
-		"date":              fmt.Sprintf("%s, %s", cfg.Testcenter.City, t.Add(time.Minute*time.Duration(2)).Format("02.01.2006")),
-		"datetime_start":    t.Format("02.01.2006 15:04"),
-		"datetime_end":      fmt.Sprintf("%s, %s", cfg.Testcenter.City, t.Add(time.Minute*time.Duration(15)).Format("02.01.2006 15:04")),
+		"date":              fmt.Sprintf("%s, %s", cfg.Testcenter.City, t.Format("02.01.2006")),
+		"datetime_start":    fmt.Sprintf("%s, %s", cfg.Testcenter.City, t.Add(time.Minute*time.Duration(2)).Format("02.01.2006 15:04")),
+		"datetime_end":      fmt.Sprintf("%s, %s", cfg.Testcenter.City, t.Add(time.Minute*time.Duration(17)).Format("02.01.2006 15:04")),
 		"ldnr":              ldnr,
 		"tc_plz_city":       cfg.Testcenter.Plz + " " + cfg.Testcenter.City,
 		"tc_street_no":      cfg.Testcenter.Street,
