@@ -32,6 +32,9 @@ type Page struct {
 // region ------------------     <start of Config-Functions>     ------------------
 
 type Config struct {
+	Tester struct {
+		Name string `yaml:name`
+	}
 	Testcenter struct {
 		Street string `yaml:"street"`
 		Plz    string `yaml:"plz"`
@@ -46,6 +49,7 @@ type Config struct {
 	} `yaml:"ldnr"`
 	Test struct {
 		Hersteller string `yaml:"hersteller"`
+		Ref        string `yaml:"ref"`
 		Pzn        string `yaml:"pzn"`
 	} `yaml:"test"`
 	Server struct {
@@ -180,22 +184,31 @@ func fillForm(w http.ResponseWriter, r *http.Request) {
 	}
 
 	form := fillpdf.Form{
-		"name":              fmt.Sprintf("%s %s", r.FormValue("fname"), r.FormValue("lname")),
-		"signature":         fmt.Sprintf("%s %s", r.FormValue("fname"), r.FormValue("lname")),
-		"signature_text":    signature_text,
-		"bday":              bday.Format("02.01.2006"),
-		"street_no":         r.FormValue("street"),
-		"plz_city":          fmt.Sprintf("%s %s", r.FormValue("zip"), r.FormValue("city")),
-		"date":              fmt.Sprintf("%s, %s", cfg.Testcenter.City, t.Format("02.01.2006")),
-		"datetime_start":    fmt.Sprintf("%s, %s", cfg.Testcenter.City, t.Add(time.Minute*time.Duration(2)).Format("02.01.2006 15:04")),
-		"datetime_end":      fmt.Sprintf("%s, %s", cfg.Testcenter.City, t.Add(time.Minute*time.Duration(17)).Format("02.01.2006 15:04")),
-		"ldnr":              ldnr,
-		"tc_plz_city":       cfg.Testcenter.Plz + " " + cfg.Testcenter.City,
-		"tc_street_no":      cfg.Testcenter.Street,
-		"tc_phone":          cfg.Testcenter.Phone,
-		"tc_email":          cfg.Testcenter.Email,
-		"test_manufacturer": cfg.Test.Hersteller,
-		"test_pzn":          cfg.Test.Pzn,
+		"firstLastNamePage1": fmt.Sprintf("%s %s", r.FormValue("fname"), r.FormValue("lname")),
+		"firstLastNamePage2": fmt.Sprintf("%s %s", r.FormValue("fname"), r.FormValue("lname")),
+		"idNumber":           "",
+		"phoneNumber":        "",
+		"signature":          fmt.Sprintf("%s %s", r.FormValue("fname"), r.FormValue("lname")),
+		"signatureText":      signature_text,
+		"bdayPage1":          bday.Format("02.01.2006"),
+		"bdayPage2":          bday.Format("02.01.2006"),
+		"streetNoPage1":      r.FormValue("street"),
+		"streetNoPage2":      r.FormValue("street"),
+		"plzCityPage1":       fmt.Sprintf("%s %s", r.FormValue("zip"), r.FormValue("city")),
+		"plzCityPage2":       fmt.Sprintf("%s %s", r.FormValue("zip"), r.FormValue("city")),
+		"date":               fmt.Sprintf("%s, %s", cfg.Testcenter.City, t.Format("02.01.2006")),
+		"testTime":           fmt.Sprintf("%s, %s", cfg.Testcenter.City, t.Add(time.Minute*time.Duration(2)).Format("02.01.2006 15:04")),
+		"testTimeStart":      fmt.Sprintf("%s, %s", cfg.Testcenter.City, t.Add(time.Minute*time.Duration(2)).Format("02.01.2006 15:04")),
+		"testTimeEnd":        fmt.Sprintf("%s, %s", cfg.Testcenter.City, t.Add(time.Minute*time.Duration(17)).Format("02.01.2006 15:04")),
+		"ldnr":               ldnr,
+		"tcPlzCity":          cfg.Testcenter.Plz + " " + cfg.Testcenter.City,
+		"tcStreetNo":         cfg.Testcenter.Street,
+		"tcPhone":            cfg.Testcenter.Phone,
+		"tcEmail":            cfg.Testcenter.Email,
+		"testManufacturer":   cfg.Test.Hersteller,
+		"testPzn":            cfg.Test.Pzn,
+		"testRef":            cfg.Test.Ref,
+		"testerName":         cfg.Tester.Name,
 	}
 
 	fmt.Println("Fillpdf with ", form)
